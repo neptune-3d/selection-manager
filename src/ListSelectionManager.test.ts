@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { SelectionManager } from "./SelectionManager";
+import { ListSelectionManager } from "./ListSelectionManager";
 
 describe("SelectionManager.selectOnPointerDown", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
     vi.clearAllMocks();
 
     vi.spyOn(manager, "selectKey");
@@ -53,10 +53,10 @@ describe("SelectionManager.selectOnPointerDown", () => {
 });
 
 describe("SelectionManager.selectOnPointerContextMenu", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
   });
 
   it("sets lastInteractedKey and selectedKeys to the given key", () => {
@@ -84,10 +84,10 @@ describe("SelectionManager.selectOnPointerContextMenu", () => {
 });
 
 describe("SelectionManager.selectOnKeyboardArrow", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
     vi.clearAllMocks();
 
     vi.spyOn(manager, "selectRange");
@@ -130,10 +130,10 @@ describe("SelectionManager.selectOnKeyboardArrow", () => {
 });
 
 describe("SelectionManager.selectOnKeyboardPage", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
     vi.clearAllMocks();
 
     vi.spyOn(manager, "selectRange");
@@ -176,10 +176,10 @@ describe("SelectionManager.selectOnKeyboardPage", () => {
 });
 
 describe("SelectionManager.selectOnKeyboardHomeEnd", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
     vi.clearAllMocks();
 
     vi.spyOn(manager, "selectRange");
@@ -222,10 +222,10 @@ describe("SelectionManager.selectOnKeyboardHomeEnd", () => {
 });
 
 describe("SelectionManager.selectOnKeyboardSpace", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
     vi.clearAllMocks();
 
     vi.spyOn(manager, "selectRange");
@@ -273,10 +273,10 @@ describe("SelectionManager.selectOnKeyboardSpace", () => {
 });
 
 describe("SelectionManager.selectKey", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
   });
 
   it("selects a single key and sets anchor/lastInteractedKey by default", () => {
@@ -308,10 +308,10 @@ describe("SelectionManager.selectKey", () => {
 });
 
 describe("SelectionManager.toggleKey", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
     manager.selectedKeys = new Set(); // start clean
   });
 
@@ -348,10 +348,10 @@ describe("SelectionManager.toggleKey", () => {
 });
 
 describe("SelectionManager.addKey", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
     manager.selectedKeys = new Set(); // start clean
   });
 
@@ -396,10 +396,10 @@ describe("SelectionManager.addKey", () => {
 });
 
 describe("SelectionManager.selectRange", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({ getKeys: () => [] });
+    manager = new ListSelectionManager({ getKeys: () => [] });
     vi.clearAllMocks();
 
     // Stub getKeyRange to return predictable ranges
@@ -435,7 +435,7 @@ describe("SelectionManager.selectRange", () => {
   });
 
   it("unions ranges when rangeMode is 'add'", () => {
-    manager = new SelectionManager({ getKeys: () => [], rangeMode: "add" });
+    manager = new ListSelectionManager({ getKeys: () => [], rangeMode: "add" });
     vi.spyOn(manager, "getKeyRange").mockImplementation((from, to) => [
       from,
       to,
@@ -453,10 +453,10 @@ describe("SelectionManager.selectRange", () => {
 });
 
 describe("SelectionManager.getKeyRange", () => {
-  let manager: SelectionManager;
+  let manager: ListSelectionManager;
 
   beforeEach(() => {
-    manager = new SelectionManager({
+    manager = new ListSelectionManager({
       getKeys: () => ["item1", "item2", "item3", "item4", "item5"],
     });
   });

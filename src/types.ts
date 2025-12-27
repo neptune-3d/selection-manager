@@ -1,18 +1,19 @@
 /**
- * Props used to configure a SelectionManager instance.
+ * Props used to configure a ListSelectionManager instance.
  */
-export type SelectionManagerProps = {
+export type ListSelectionManagerProps = {
   /**
    * Returns the ordered list of all selectable keys.
    *
-   * This function should provide a stable array of string identifiers
-   * representing the items that can be selected. The order of keys in
-   * the array is used by range‑selection logic (e.g. shift‑click or
-   * keyboard range selection).
+   * This function should provide a stable array of identifiers
+   * (string or number) representing the items that can be selected.
+   * The order of keys in the array is used by range‑selection logic
+   * (e.g. shift‑click or keyboard range selection).
    *
    * @returns {SelectionKey[]} An array of keys in the order they appear in the UI.
    */
   getKeys: () => SelectionKey[];
+
   /**
    * Determines how range selections are applied when using shift‑based interactions.
    *

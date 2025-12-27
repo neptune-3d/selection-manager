@@ -1,28 +1,28 @@
 import type {
+  ListSelectionManagerProps,
   SelectionKey,
-  SelectionManagerProps,
   SelectionRangeMode,
 } from "./types";
 
 /**
  * Manages selection state and logic for a list of items.
  *
- * The SelectionManager tracks which keys are currently selected,
+ * The ListSelectionManager tracks which keys are currently selected,
  * the anchor key used for range selections, and the last key
  * that was interacted with. It provides methods for handling
  * pointer and keyboard interactions in a way that mirrors common
- * UI conventions (click, shift‑click, ctrl‑click, etc.).
+ * UI conventions (click, shift‑click, toggle‑click, etc.).
  */
-export class SelectionManager {
+export class ListSelectionManager {
   /**
-   * Creates a new SelectionManager.
+   * Creates a new ListSelectionManager.
    *
    * @param props Configuration options for the manager.
    *              Must include a `getKeys` function that returns
    *              the ordered list of all selectable keys. The
    *              order of keys is used to compute ranges.
    */
-  constructor(props: SelectionManagerProps) {
+  constructor(props: ListSelectionManagerProps) {
     this.getKeys = props.getKeys;
     this.rangeMode = props.rangeMode ?? "replace";
   }

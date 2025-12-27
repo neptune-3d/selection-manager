@@ -1,2 +1,2 @@
-export * from "./SelectionManager";
+export * from "./ListSelectionManager";
 export * from "./types";
