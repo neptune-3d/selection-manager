@@ -1,4 +1,8 @@
-import type { SelectionManagerProps, SelectionRangeMode } from "./types";
+import type {
+  SelectionKey,
+  SelectionManagerProps,
+  SelectionRangeMode,
+} from "./types";
 
 /**
  * Manages selection state and logic for a list of items.
@@ -23,34 +27,34 @@ export class SelectionManager {
     this.rangeMode = props.rangeMode ?? "replace";
   }
 
-  protected getKeys: () => string[];
+  protected getKeys: () => SelectionKey[];
   protected rangeMode: SelectionRangeMode;
 
-  protected _selectedKeys: Set<string> = new Set();
-  protected _anchorKey: string | null = null;
-  protected _lastInteractedKey: string | null = null;
+  protected _selectedKeys: Set<SelectionKey> = new Set();
+  protected _anchorKey: SelectionKey | null = null;
+  protected _lastInteractedKey: SelectionKey | null = null;
 
-  get selectedKeys(): Set<string> {
+  get selectedKeys(): Set<SelectionKey> {
     return this._selectedKeys;
   }
 
-  set selectedKeys(keys: Set<string>) {
+  set selectedKeys(keys: Set<SelectionKey>) {
     this._selectedKeys = keys;
   }
 
-  get anchorKey(): string | null {
+  get anchorKey(): SelectionKey | null {
     return this._anchorKey;
   }
 
-  set anchorKey(key: string | null) {
+  set anchorKey(key: SelectionKey | null) {
     this._anchorKey = key;
   }
 
-  get lastInteractedKey(): string | null {
+  get lastInteractedKey(): SelectionKey | null {
     return this._lastInteractedKey;
   }
 
-  set lastInteractedKey(key: string | null) {
+  set lastInteractedKey(key: SelectionKey | null) {
     this._lastInteractedKey = key;
   }
 
@@ -78,7 +82,7 @@ export class SelectionManager {
    * @param key The key to check.
    * @returns {boolean} True if the key is selected, otherwise false.
    */
-  isKeySelected(key: string): boolean {
+  isKeySelected(key: SelectionKey): boolean {
     return this.selectedKeys.has(key);
   }
 
@@ -94,18 +98,18 @@ export class SelectionManager {
   /**
    * Returns the currently selected keys as an array.
    *
-   * @returns {string[]} An array containing all selected keys.
+   * @returns {SelectionKey[]} An array containing all selected keys.
    */
-  getSelectedKeysAsArray(): string[] {
+  getSelectedKeysAsArray(): SelectionKey[] {
     return Array.from(this.selectedKeys);
   }
 
   /**
    * Retrieves the first key in the current selection.
    *
-   * @returns {string | null} The first selected key, or null if no keys are selected.
+   * @returns {SelectionKey | null} The first selected key, or null if no keys are selected.
    */
-  getFirstSelectedKey(): string | null {
+  getFirstSelectedKey(): SelectionKey | null {
     const first = this.selectedKeys.values().next();
     return first.done ? null : first.value;
   }
@@ -126,7 +130,7 @@ export class SelectionManager {
    * @param shiftKey Whether the Shift modifier was pressed.
    * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
    */
-  selectOnPointerDown(key: string, shiftKey: boolean, ctrlKey: boolean) {
+  selectOnPointerDown(key: SelectionKey, shiftKey: boolean, ctrlKey: boolean) {
     this.lastInteractedKey = key;
 
     if (shiftKey && this.anchorKey) {
@@ -150,7 +154,7 @@ export class SelectionManager {
    *
    * @param key The key that was right‑clicked.
    */
-  selectOnPointerContextMenu(key: string) {
+  selectOnPointerContextMenu(key: SelectionKey) {
     this.lastInteractedKey = key;
 
     this.selectedKeys = new Set([key]);
@@ -177,7 +181,11 @@ export class SelectionManager {
    * @param shiftKey Whether the Shift modifier was pressed.
    * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
    */
-  selectOnKeyboardArrow(key: string, shiftKey: boolean, ctrlKey: boolean) {
+  selectOnKeyboardArrow(
+    key: SelectionKey,
+    shiftKey: boolean,
+    ctrlKey: boolean
+  ) {
     this.lastInteractedKey = key;
 
     if (shiftKey && this.anchorKey) {
@@ -206,7 +214,7 @@ export class SelectionManager {
    * @param shiftKey Whether the Shift modifier was pressed.
    * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
    */
-  selectOnKeyboardPage(key: string, shiftKey: boolean, ctrlKey: boolean) {
+  selectOnKeyboardPage(key: SelectionKey, shiftKey: boolean, ctrlKey: boolean) {
     this.lastInteractedKey = key;
 
     if (shiftKey && this.anchorKey) {
@@ -235,7 +243,11 @@ export class SelectionManager {
    * @param shiftKey Whether the Shift modifier was pressed.
    * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
    */
-  selectOnKeyboardHomeEnd(key: string, shiftKey: boolean, ctrlKey: boolean) {
+  selectOnKeyboardHomeEnd(
+    key: SelectionKey,
+    shiftKey: boolean,
+    ctrlKey: boolean
+  ) {
     this.lastInteractedKey = key;
 
     if (shiftKey && this.anchorKey) {
@@ -264,7 +276,11 @@ export class SelectionManager {
    * @param shiftKey Whether the Shift modifier was pressed.
    * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
    */
-  selectOnKeyboardSpace(key: string, shiftKey: boolean, ctrlKey: boolean) {
+  selectOnKeyboardSpace(
+    key: SelectionKey,
+    shiftKey: boolean,
+    ctrlKey: boolean
+  ) {
     this.lastInteractedKey = key;
 
     if (shiftKey && this.anchorKey) {
@@ -293,7 +309,7 @@ export class SelectionManager {
    * @param key The key to select.
    * @param preserveAnchor Whether to keep the current anchor key instead of updating it.
    */
-  selectKey(key: string, preserveAnchor: boolean = false) {
+  selectKey(key: SelectionKey, preserveAnchor: boolean = false) {
     this.selectedKeys = new Set([key]);
     if (!preserveAnchor) {
       this.anchorKey = key;
@@ -310,13 +326,11 @@ export class SelectionManager {
    *
    * @param key The key to toggle in the selection.
    */
-  toggleKey(key: string) {
+  toggleKey(key: SelectionKey) {
     const next = new Set(this.selectedKeys);
     if (next.has(key)) {
       next.delete(key);
-    }
-    //
-    else {
+    } else {
       next.add(key);
     }
     this.selectedKeys = next;
@@ -331,7 +345,7 @@ export class SelectionManager {
    *
    * @param key The key to add to the selection.
    */
-  addKey(key: string) {
+  addKey(key: SelectionKey) {
     const next = new Set(this.selectedKeys);
     next.add(key);
     this.selectedKeys = next;
@@ -354,14 +368,12 @@ export class SelectionManager {
    * @param fromKey The starting key of the range.
    * @param toKey The ending key of the range.
    */
-  selectRange(fromKey: string, toKey: string) {
+  selectRange(fromKey: SelectionKey, toKey: SelectionKey) {
     const range = this.getKeyRange(fromKey, toKey);
 
     if (this.rangeMode === "add") {
       this.selectedKeys = new Set([...this.selectedKeys, ...range]);
-    }
-    //
-    else {
+    } else {
       this.selectedKeys = new Set(range);
     }
 
@@ -392,9 +404,9 @@ export class SelectionManager {
    *
    * @param fromKey The starting key of the range.
    * @param toKey The ending key of the range.
-   * @returns {string[]} An array of keys spanning from `fromKey` to `toKey`, inclusive.
+   * @returns {SelectionKey[]} An array of keys spanning from `fromKey` to `toKey`, inclusive.
    */
-  getKeyRange(fromKey: string, toKey: string): string[] {
+  getKeyRange(fromKey: SelectionKey, toKey: SelectionKey): SelectionKey[] {
     const keys = this.getKeys();
     const fromIndex = keys.indexOf(fromKey);
     const toIndex = keys.indexOf(toKey);

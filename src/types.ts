@@ -10,9 +10,9 @@ export type SelectionManagerProps = {
    * the array is used by range‑selection logic (e.g. shift‑click or
    * keyboard range selection).
    *
-   * @returns {string[]} An array of keys in the order they appear in the UI.
+   * @returns {SelectionKey[]} An array of keys in the order they appear in the UI.
    */
-  getKeys: () => string[];
+  getKeys: () => SelectionKey[];
   /**
    * Determines how range selections are applied when using shift‑based interactions.
    *
@@ -23,3 +23,5 @@ export type SelectionManagerProps = {
 };
 
 export type SelectionRangeMode = "replace" | "add";
+
+export type SelectionKey = string | number;
