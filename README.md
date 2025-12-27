@@ -22,7 +22,8 @@ window.addEventListener("keydown", (e) => {
     // get next focused key
     // const focusedKey = ...
 
-    selection.selectOnKeyboardArrow(focusedKey, e.shiftKey, e.ctrlKey); // or e.metaKey instead of e.ctrlKey if on MacOS
+    // or e.metaKey instead of e.ctrlKey if on MacOS
+    selection.selectOnKeyboardArrow(focusedKey, e.shiftKey, e.ctrlKey);
 
     // update selection ( and focus ) UI
   }
