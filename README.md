@@ -40,5 +40,5 @@ window.addEventListener("keydown", (e) => {
 
 // update UI
 
-tableRow.classList.toggle("selected", selection.isKeySelected(tableRow.key));
+tableRow.classList.toggle("selected", selection.isKeySelected(row.key));
 ```
