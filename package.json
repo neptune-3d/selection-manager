@@ -1,7 +1,7 @@
 {
   "name": "@neptune3d/selection-manager",
-  "version": "0.0.1",
-  "description": "Accessible, spec-compliant selection state manager",
+  "version": "0.0.2",
+  "description": "Accessible, spec-compliant selection state managers",
   "keywords": [
     "selection"
   ],
