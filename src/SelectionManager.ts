@@ -122,22 +122,26 @@ export class SelectionManager {
    *
    * - **Shift + click**: If an anchor key exists, selects the range
    *   between the anchor and the clicked key.
-   * - **Ctrl/Command + click**: Toggles the clicked key in the selection
+   * - **Toggle (Ctrl/Command) + click**: Toggles the clicked key in the selection
    *   without affecting other selected keys.
    * - **Plain click**: Selects only the clicked key and sets it as the new anchor.
    *
    * @param key The key that was clicked.
    * @param shiftKey Whether the Shift modifier was pressed.
-   * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
+   * @param toggleKey Whether the toggle modifier (Ctrl/Command) was pressed.
    */
-  selectOnPointerDown(key: SelectionKey, shiftKey: boolean, ctrlKey: boolean) {
+  selectOnPointerDown(
+    key: SelectionKey,
+    shiftKey: boolean,
+    toggleKey: boolean
+  ) {
     this.lastInteractedKey = key;
 
     if (shiftKey && this.anchorKey) {
       this.selectRange(this.anchorKey, key);
     }
     //
-    else if (ctrlKey) {
+    else if (toggleKey) {
       this.toggleKey(key);
     }
     //
@@ -172,19 +176,19 @@ export class SelectionManager {
    *
    * - **Shift + arrow**: If an anchor key exists, extends the selection
    *   as a range from the anchor to the newly focused key.
-   * - **Arrow without Ctrl/Command**: Moves selection to the newly focused key,
+   * - **Arrow without toggle (Ctrl/Command)**: Moves selection to the newly focused key,
    *   replacing any previous selection.
-   * - **Arrow with Ctrl/Command**: Only updates `lastInteractedKey` without
+   * - **Arrow with toggle (Ctrl/Command)**: Only updates `lastInteractedKey` without
    *   altering the selection.
    *
    * @param key The key navigated to with the arrow key.
    * @param shiftKey Whether the Shift modifier was pressed.
-   * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
+   * @param toggleKey Whether the toggle modifier (Ctrl/Command) was pressed.
    */
   selectOnKeyboardArrow(
     key: SelectionKey,
     shiftKey: boolean,
-    ctrlKey: boolean
+    toggleKey: boolean
   ) {
     this.lastInteractedKey = key;
 
@@ -192,7 +196,7 @@ export class SelectionManager {
       this.selectRange(this.anchorKey, key);
     }
     //
-    else if (!ctrlKey) {
+    else if (!toggleKey) {
       this.selectKey(key);
     }
   }
@@ -205,23 +209,27 @@ export class SelectionManager {
    *
    * - **Shift + Page key**: If an anchor key exists, extends the selection
    *   as a range from the anchor to the newly focused key.
-   * - **Page key without Ctrl/Command**: Moves selection to the newly focused key,
+   * - **Page key without toggle (Ctrl/Command)**: Moves selection to the newly focused key,
    *   replacing any previous selection.
-   * - **Page key with Ctrl/Command**: Only updates `lastInteractedKey` without
+   * - **Page key with toggle (Ctrl/Command)**: Only updates `lastInteractedKey` without
    *   altering the selection.
    *
    * @param key The key navigated to with the Page Up/Page Down action.
    * @param shiftKey Whether the Shift modifier was pressed.
-   * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
+   * @param toggleKey Whether the toggle modifier (Ctrl/Command) was pressed.
    */
-  selectOnKeyboardPage(key: SelectionKey, shiftKey: boolean, ctrlKey: boolean) {
+  selectOnKeyboardPage(
+    key: SelectionKey,
+    shiftKey: boolean,
+    toggleKey: boolean
+  ) {
     this.lastInteractedKey = key;
 
     if (shiftKey && this.anchorKey) {
       this.selectRange(this.anchorKey, key);
     }
     //
-    else if (!ctrlKey) {
+    else if (!toggleKey) {
       this.selectKey(key);
     }
   }
@@ -234,19 +242,19 @@ export class SelectionManager {
    *
    * - **Shift + Home/End**: If an anchor key exists, extends the selection
    *   as a range from the anchor to the newly focused key.
-   * - **Home/End without Ctrl/Command**: Moves selection to the newly focused key,
+   * - **Home/End without toggle (Ctrl/Command)**: Moves selection to the newly focused key,
    *   replacing any previous selection.
-   * - **Home/End with Ctrl/Command**: Only updates `lastInteractedKey` without
+   * - **Home/End with toggle (Ctrl/Command)**: Only updates `lastInteractedKey` without
    *   altering the selection.
    *
    * @param key The key navigated to with the Home or End action.
    * @param shiftKey Whether the Shift modifier was pressed.
-   * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
+   * @param toggleKey Whether the toggle modifier (Ctrl/Command) was pressed.
    */
   selectOnKeyboardHomeEnd(
     key: SelectionKey,
     shiftKey: boolean,
-    ctrlKey: boolean
+    toggleKey: boolean
   ) {
     this.lastInteractedKey = key;
 
@@ -254,7 +262,7 @@ export class SelectionManager {
       this.selectRange(this.anchorKey, key);
     }
     //
-    else if (!ctrlKey) {
+    else if (!toggleKey) {
       this.selectKey(key);
     }
   }
@@ -267,19 +275,19 @@ export class SelectionManager {
    *
    * - **Shift + Space**: If an anchor key exists, extends the selection
    *   as a range from the anchor to the newly focused key.
-   * - **Ctrl/Command + Space**: Toggles the clicked key in the selection
+   * - **Toggle (Ctrl/Command) + Space**: Toggles the clicked key in the selection
    *   without affecting other selected keys.
    * - **Plain Space**: Adds the focused key to the current selection
    *   (without clearing existing selections).
    *
    * @param key The key activated with the Space key.
    * @param shiftKey Whether the Shift modifier was pressed.
-   * @param ctrlKey Whether the Ctrl/Command modifier was pressed.
+   * @param toggleKey Whether the toggle modifier (Ctrl/Command) was pressed.
    */
   selectOnKeyboardSpace(
     key: SelectionKey,
     shiftKey: boolean,
-    ctrlKey: boolean
+    toggleKey: boolean
   ) {
     this.lastInteractedKey = key;
 
@@ -287,7 +295,7 @@ export class SelectionManager {
       this.selectRange(this.anchorKey, key);
     }
     //
-    else if (ctrlKey) {
+    else if (toggleKey) {
       this.toggleKey(key);
     }
     //
@@ -295,7 +303,6 @@ export class SelectionManager {
       this.addKey(key);
     }
   }
-
   /**
    * Selects a single key, replacing any existing selection.
    *
